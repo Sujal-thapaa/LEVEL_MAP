@@ -5,9 +5,17 @@ import { Level } from '../types';
 interface CurvedRailwayPathProps {
   levels: Level[];
   progress: number; // 0..1 progress along the full path for the red dotted overlay
+  currentLevel: number;
 }
 
-const CurvedRailwayPath: React.FC<CurvedRailwayPathProps> = ({ levels, progress }) => {
+const CurvedRailwayPath: React.FC<CurvedRailwayPathProps> = ({ levels, progress, currentLevel }) => {
+  // Helper function to get ring color based on level status
+  const getRingColor = (levelId: number) => {
+    if (levelId === currentLevel) {
+      return '#ff0000'; // Red for current level
+    }
+    return '#00ffff'; // Blue for other levels
+  };
   // Create circuit board trace path connecting all levels
   const createCircuitPath = () => {
     if (levels.length < 2) return '';
@@ -176,9 +184,9 @@ const CurvedRailwayPath: React.FC<CurvedRailwayPathProps> = ({ levels, progress 
               cy={level.position.y}
               r={3}
               fill="none"
-              stroke="#00ffff"
+              stroke={getRingColor(level.id)}
               strokeWidth="0.5"
-              opacity="0.6"
+              opacity={0.6}
               animate={{
                 r: [3, 5, 3],
                 opacity: [0.6, 0.2, 0.6],

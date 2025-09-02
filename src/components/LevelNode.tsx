@@ -192,7 +192,7 @@ const LevelNode: React.FC<LevelNodeProps> = ({ level, onClick, status, onHover, 
               className="absolute -inset-4"
               style={{ 
                 clipPath: hexagonClipPath,
-                border: `4px solid ${styles.glowColor}`,
+                border: `4px solid #ff0000`,
               }}
               initial={{ scale: 0, opacity: 1 }}
               animate={{ scale: 2, opacity: 0 }}
@@ -202,7 +202,7 @@ const LevelNode: React.FC<LevelNodeProps> = ({ level, onClick, status, onHover, 
               className="absolute -inset-2"
               style={{ 
                 clipPath: hexagonClipPath,
-                backgroundColor: `${styles.glowColor}20`,
+                backgroundColor: `#ff000020`,
               }}
               initial={{ scale: 0, opacity: 0.8 }}
               animate={{ scale: 1.5, opacity: 0 }}
@@ -217,7 +217,7 @@ const LevelNode: React.FC<LevelNodeProps> = ({ level, onClick, status, onHover, 
             className="absolute -inset-3"
             style={{ 
               clipPath: hexagonClipPath,
-              border: `3px solid ${styles.glowColor}`,
+              border: `3px solid #ff0000`,
             }}
             animate={{ 
               scale: [1, 1.2, 1],
@@ -237,7 +237,27 @@ const LevelNode: React.FC<LevelNodeProps> = ({ level, onClick, status, onHover, 
             className="absolute -inset-1"
             style={{ 
               clipPath: hexagonClipPath,
-              border: `2px solid ${styles.glowColor}`,
+              border: `2px solid #00d4ff`,
+            }}
+            animate={{ 
+              scale: [1, 1.1, 1],
+              opacity: [0.3, 0.6, 0.3]
+            }}
+            transition={{ 
+              duration: 2, 
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        )}
+
+        {/* Enhanced glow effect for current level */}
+        {status === LevelStatus.CURRENT && (
+          <motion.div
+            className="absolute -inset-1"
+            style={{ 
+              clipPath: hexagonClipPath,
+              border: `2px solid #ff0000`,
             }}
             animate={{ 
               scale: [1, 1.1, 1],

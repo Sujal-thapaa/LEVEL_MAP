@@ -282,6 +282,7 @@ const LevelMap: React.FC = () => {
                   <CurvedRailwayPath
           levels={levels}
           progress={pathProgress}
+          currentLevel={currentLevel}
         />
 
           {/* Moving Character */}
