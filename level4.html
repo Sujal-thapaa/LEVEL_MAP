@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 4 - Things Are Heating Up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-white">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Level 4</h1>
+            <p class="text-xl text-pink-100">Things are heating up now!</p>
+        </div>
+
+        <!-- Level Content -->
+        <div class="max-w-4xl mx-auto bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
+            <div class="text-center">
+                <div class="text-8xl mb-6">🔥</div>
+                <h2 class="text-3xl font-bold mb-4">Heat Challenge</h2>
+                <p class="text-lg text-pink-100 mb-8">
+                    Can you handle the heat? Prove your skills!
+                </p>
+                
+                <!-- Placeholder for level content -->
+                <div class="bg-white/20 rounded-2xl p-6 mb-8">
+                    <p class="text-lg">Your heat challenge content goes here!</p>
+                    <p class="text-sm text-pink-200 mt-2">This could be a speed challenge, reaction test, or endurance game.</p>
+                </div>
+
+                <!-- Complete Button -->
+                <button 
+                    onclick="completeLevel()"
+                    class="bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 
+                           text-white font-bold py-4 px-8 rounded-full shadow-lg shadow-green-500/30
+                           transform transition-all duration-200 hover:scale-105 active:scale-95 
+                           border border-green-400"
+                >
+                    Complete Level
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="text-center mt-8">
+            <a href="index.html" 
+               class="inline-block bg-gradient-to-r from-pink-600 to-pink-800 hover:from-pink-700 hover:to-pink-900 
+                      text-white font-bold py-3 px-6 rounded-full shadow-lg shadow-pink-500/30
+                      transform transition-all duration-200 hover:scale-105 active:scale-95 
+                      border border-pink-400">
+                ← Back to Level Map
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function completeLevel() {
+            localStorage.setItem('level4Completed', 'true');
+            alert('Level 4 completed! Returning to level map...');
+            window.location.href = 'index.html';
+        }
+
+        if (localStorage.getItem('level4Completed') === 'true') {
+            document.querySelector('button').textContent = 'Level Completed!';
+            document.querySelector('button').disabled = true;
+            document.querySelector('button').classList.add('opacity-50', 'cursor-not-allowed');
+        }
+    </script>
+</body>
+</html>
