@@ -103,13 +103,13 @@ const CurvedRailwayPath: React.FC<CurvedRailwayPathProps> = ({ levels, progress 
         <motion.path
           d={pathData}
           stroke="#00ffff"
-          strokeWidth="4"
+          strokeWidth="2"
           fill="none"
           strokeLinecap="square"
           strokeLinejoin="miter"
           filter="url(#glowFilter)"
           animate={{
-            strokeWidth: [4, 6, 4],
+            strokeWidth: [2, 3, 2],
             opacity: [0.7, 1, 0.7],
           }}
           transition={{
@@ -159,7 +159,7 @@ const CurvedRailwayPath: React.FC<CurvedRailwayPathProps> = ({ levels, progress 
             <circle
               cx={level.position.x}
               cy={level.position.y}
-              r="2"
+              r={2}
               fill="#00ffff"
               filter="url(#glowFilter)"
             />
@@ -167,14 +167,14 @@ const CurvedRailwayPath: React.FC<CurvedRailwayPathProps> = ({ levels, progress 
             <circle
               cx={level.position.x}
               cy={level.position.y}
-              r="1"
+              r={1}
               fill="#ffffff"
             />
             {/* Connection rings */}
             <motion.circle
               cx={level.position.x}
               cy={level.position.y}
-              r="3"
+              r={3}
               fill="none"
               stroke="#00ffff"
               strokeWidth="0.5"

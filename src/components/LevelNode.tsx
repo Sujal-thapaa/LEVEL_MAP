@@ -146,14 +146,38 @@ const LevelNode: React.FC<LevelNodeProps> = ({ level, onClick, status, onHover, 
             <Lock size={24} style={{ color: styles.textColor }} />
           ) : status === LevelStatus.COMPLETED ? (
             <div className="flex flex-col items-center">
-              <Check size={20} style={{ color: styles.textColor }} />
+              {level.icon?.startsWith('./') ? (
+                <img 
+                  src={level.icon} 
+                  alt={level.topic || 'Level'} 
+                  className="w-8 h-8 mb-1 object-contain"
+                  onError={(e) => {
+                    console.log('Failed to load icon:', level.icon);
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+              ) : (
+                <div className="text-2xl mb-1">{level.icon}</div>
+              )}
               <div className="text-xs font-bold mt-1" style={{ color: styles.textColor }}>
                 {level.topic?.split(' ')[0] || 'Done'}
               </div>
             </div>
           ) : (
             <div className="flex flex-col items-center">
-              <div className="text-2xl mb-1">{level.icon}</div>
+              {level.icon?.startsWith('./') ? (
+                <img 
+                  src={level.icon} 
+                  alt={level.topic || 'Level'} 
+                  className="w-8 h-8 mb-1 object-contain"
+                  onError={(e) => {
+                    console.log('Failed to load icon:', level.icon);
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+              ) : (
+                <div className="text-2xl mb-1">{level.icon}</div>
+              )}
               <div className="text-xs font-bold" style={{ color: styles.textColor }}>
                 {level.topic?.split(' ')[0] || 'Level'}
               </div>

@@ -31,13 +31,13 @@ const LevelMap: React.FC = () => {
 
   // Define level positions along the curved path (Candy Crush style)
   const levelData = useMemo(() => [
-    { id: 1, x: 15, y: 85, difficulty: 'Easy' as const, stars: 1, description: 'Welcome! Start your journey here.', color: '#00d4ff', icon: '🛡️', topic: 'Cybersecurity Basics' },
-    { id: 2, x: 50, y: 65, difficulty: 'Easy' as const, stars: 1, description: 'Learn the basics with simple challenges.', color: '#00d4ff', icon: '🧠', topic: 'AI & Machine Learning' },
-    { id: 3, x: 85, y: 55, difficulty: 'Easy' as const, stars: 2, description: 'Getting warmed up? Try some combos!', color: '#00d4ff', icon: '🐟', topic: 'Phishing Detection' },
-    { id: 4, x: 50, y: 45, difficulty: 'Medium' as const, stars: 2, description: 'Things are heating up now!', color: '#00d4ff', icon: '🔐', topic: 'Password Security' },
-    { id: 5, x: 15, y: 35, difficulty: 'Medium' as const, stars: 2, description: 'Strategic thinking required.', color: '#00d4ff', icon: '🌐', topic: 'Network Security' },
-    { id: 6, x: 50, y: 25, difficulty: 'Medium' as const, stars: 2, description: 'Complex patterns await you.', color: '#00d4ff', icon: '💻', topic: 'System Administration' },
-    { id: 7, x: 85, y: 15, difficulty: 'Hard' as const, stars: 3, description: 'Expert level challenges ahead!', color: '#00d4ff', icon: '🎯', topic: 'Penetration Testing' },
+    { id: 1, x: 15, y: 85, difficulty: 'Easy' as const, stars: 1, description: 'Welcome! Start your journey here.', color: '#00d4ff', icon: './icons/cyber.png', topic: 'Cyber' },
+    { id: 2, x: 50, y: 65, difficulty: 'Easy' as const, stars: 1, description: 'Learn the basics with simple challenges.', color: '#00d4ff', icon: './icons/AI.png', topic: 'AI & Machine Learning' },
+    { id: 3, x: 85, y: 55, difficulty: 'Easy' as const, stars: 2, description: 'Getting warmed up? Try some combos!', color: '#00d4ff', icon: './icons/phishing.png', topic: 'Phishing Detection' },
+    { id: 4, x: 50, y: 45, difficulty: 'Medium' as const, stars: 2, description: 'Things are heating up now!', color: '#00d4ff', icon: './icons/password.png', topic: 'Password Security' },
+    { id: 5, x: 15, y: 35, difficulty: 'Medium' as const, stars: 2, description: 'Strategic thinking required.', color: '#00d4ff', icon: './icons/network.png', topic: 'Network Security' },
+    { id: 6, x: 50, y: 25, difficulty: 'Medium' as const, stars: 2, description: 'Complex patterns await you.', color: '#00d4ff', icon: './icons/system.png', topic: 'System Administration' },
+    { id: 7, x: 85, y: 15, difficulty: 'Hard' as const, stars: 3, description: 'Expert level challenges ahead!', color: '#00d4ff', icon: './icons/testing.png', topic: 'Penetration Testing' },
   ], []);
 
   const levels: Level[] = useMemo(() => 
@@ -97,11 +97,11 @@ const LevelMap: React.FC = () => {
 
   const handleNext = useCallback(() => {
     if (currentLevel <= 7) {
+      // Immediately mark current level as completed and show stars
+      setCompletedLevels(prev => Array.from(new Set([...prev, currentLevel])));
+      setSoundTriggers(prev => ({ ...prev, levelComplete: true }));
+      
       if (currentLevel < 7) {
-        // Immediately mark current level as completed and show stars
-        setCompletedLevels(prev => Array.from(new Set([...prev, currentLevel])));
-        setSoundTriggers(prev => ({ ...prev, levelComplete: true }));
-        
         // Show guide character with hint for next level
         setShowGuide(true);
         setGuideImageIndex(prev => (prev + 1) % 3); // Cycle through 3 images
@@ -139,6 +139,7 @@ const LevelMap: React.FC = () => {
           requestAnimationFrame(animateLogo);
         }, 500); // Small delay to let guide appear first
       }
+      // If currentLevel === 7, it will just mark as completed and show the completion message
     }
   }, [currentLevel, levels]);
 
