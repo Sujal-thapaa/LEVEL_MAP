@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Level, LevelStatus } from '../types';
-import { Lock, Star, Check } from 'lucide-react';
+import { Lock, Star } from 'lucide-react';
 
 interface LevelNodeProps {
   level: Level;
@@ -231,45 +231,6 @@ const LevelNode: React.FC<LevelNodeProps> = ({ level, onClick, status, onHover, 
           />
         )}
 
-        {/* Enhanced glow effect for unlocked levels */}
-        {status === LevelStatus.UNLOCKED && (
-          <motion.div
-            className="absolute -inset-1"
-            style={{ 
-              clipPath: hexagonClipPath,
-              border: `2px solid #00d4ff`,
-            }}
-            animate={{ 
-              scale: [1, 1.1, 1],
-              opacity: [0.3, 0.6, 0.3]
-            }}
-            transition={{ 
-              duration: 2, 
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-        )}
-
-        {/* Enhanced glow effect for current level */}
-        {status === LevelStatus.CURRENT && (
-          <motion.div
-            className="absolute -inset-1"
-            style={{ 
-              clipPath: hexagonClipPath,
-              border: `2px solid #ff0000`,
-            }}
-            animate={{ 
-              scale: [1, 1.1, 1],
-              opacity: [0.3, 0.6, 0.3]
-            }}
-            transition={{ 
-              duration: 2, 
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-        )}
       </motion.div>
 
       {/* Stars below the level node - only show after completion */}
