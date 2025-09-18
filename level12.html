@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 12 - Secure Coding</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+    </style>
+</head>
+<body class="min-h-screen text-white">
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Level 12</h1>
+            <p class="text-xl text-orange-100">Write code that defends itself.</p>
+        </div>
+
+        <div class="max-w-4xl mx-auto bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
+            <div class="text-center">
+                <div class="text-8xl mb-6">💻</div>
+                <h2 class="text-3xl font-bold mb-4">Secure Coding Challenge</h2>
+                <p class="text-lg text-orange-100 mb-8">Find and fix vulnerabilities.</p>
+                <div class="bg-white/20 rounded-2xl p-6 mb-8">
+                    <p class="text-lg">Your secure coding content goes here!</p>
+                    <p class="text-sm text-orange-200 mt-2">OWASP, input validation, and more.</p>
+                </div>
+
+                <button onclick="completeLevel()" class="bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white font-bold py-4 px-8 rounded-full shadow-lg shadow-green-500/30 transform transition-all duration-200 hover:scale-105 active:scale-95 border border-green-400">Complete Level</button>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="index.html" class="inline-block bg-gradient-to-r from-orange-600 to-orange-800 hover:from-orange-700 hover:to-orange-900 text-white font-bold py-3 px-6 rounded-full shadow-lg shadow-orange-500/30 transform transition-all duration-200 hover:scale-105 active:scale-95 border border-orange-400">← Back to Level Map</a>
+        </div>
+    </div>
+
+    <script>
+        function completeLevel() {
+            localStorage.setItem('level12Completed', 'true');
+            alert('Level 12 completed! Returning to level map...');
+            window.location.href = 'index.html';
+        }
+        if (localStorage.getItem('level12Completed') === 'true') {
+            const btn = document.querySelector('button');
+            btn.textContent = 'Level Completed!';
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+    </script>
+</body>
+</html>
+
+
