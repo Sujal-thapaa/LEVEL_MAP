@@ -5,7 +5,6 @@ import LevelNode from './LevelNode';
 import CurvedRailwayPath from './CurvedRailwayPath.tsx';
 import MovingCharacter from './MovingCharacter';
 import ProgressBar from './ProgressBar';
-import LevelTooltip from './LevelTooltip';
 import SoundManager from './SoundManager';
 import AboutModal from './AboutModal';
 import GuideCharacter from './GuideCharacter';
@@ -14,8 +13,6 @@ import { Info, Volume2, VolumeX } from 'lucide-react';
 const LevelMap: React.FC = () => {
   const [currentLevel, setCurrentLevel] = useState(1);
   const [completedLevels, setCompletedLevels] = useState<number[]>([]);
-  const [hoveredLevel, setHoveredLevel] = useState<Level | null>(null);
-  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const [isMoving, setIsMoving] = useState(false);
   const [showUnlockAnimation, setShowUnlockAnimation] = useState<number | null>(null);
   const [soundTriggers, setSoundTriggers] = useState({
@@ -133,6 +130,10 @@ const LevelMap: React.FC = () => {
 
   const handleLevelClick = useCallback((levelId: number) => {
     if (levelId <= currentLevel && !completedLevels.includes(levelId)) {
+      // Save current progress state before navigating
+      localStorage.setItem('currentLevel', currentLevel.toString());
+      localStorage.setItem('completedLevels', JSON.stringify(completedLevels));
+      // Navigate to level
       window.location.href = `level${levelId}.html`;
     }
   }, [currentLevel, completedLevels]);
@@ -168,8 +169,11 @@ const LevelMap: React.FC = () => {
               requestAnimationFrame(animateLogo);
             } else {
               // Movement finished: advance to next level
-              setCurrentLevel(prev => prev + 1);
-              setShowUnlockAnimation(currentLevel + 1);
+              const newLevel = currentLevel + 1;
+              setCurrentLevel(newLevel);
+              // Save new current level to localStorage
+              localStorage.setItem('currentLevel', newLevel.toString());
+              setShowUnlockAnimation(newLevel);
               setSoundTriggers(prev => ({ ...prev, levelUnlock: true }));
               setIsMoving(false);
               setPartialProgress(0);
@@ -189,7 +193,6 @@ const LevelMap: React.FC = () => {
   const handleReset = useCallback(() => {
     setCurrentLevel(1);
     setCompletedLevels([]);
-    setHoveredLevel(null);
     setIsMoving(false);
     setShowUnlockAnimation(null);
     setPartialProgress(0);
@@ -199,15 +202,17 @@ const LevelMap: React.FC = () => {
     for (let i = 1; i <= levelData.length; i++) {
       localStorage.removeItem(`level${i}Completed`);
     }
+    // Clear saved current level
+    localStorage.removeItem('currentLevel');
+    localStorage.removeItem('completedLevels');
   }, [levelData.length]);
 
   const handleGuideComplete = useCallback(() => {
     setShowGuide(false);
   }, []);
 
-  const handleLevelHover = useCallback((level: Level | null, position: { x: number; y: number }) => {
-    setHoveredLevel(level);
-    setTooltipPosition(position);
+  const handleLevelHover = useCallback(() => {
+    // Tooltip removed - no action needed
   }, []);
 
   const resetSoundTriggers = useCallback(() => {
@@ -222,10 +227,24 @@ const LevelMap: React.FC = () => {
       }
     }
     setCompletedLevels(completed);
-    const nextLevel = completed.length + 1;
-    if (nextLevel <= levelData.length) {
-      setCurrentLevel(nextLevel);
-      const levelPos = levelData.find(l => l.id === nextLevel);
+    
+    // Restore saved current level, preferring saved state over calculated
+    const savedCurrentLevel = localStorage.getItem('currentLevel');
+    
+    let levelToSet = completed.length + 1; // Default: next uncompleted level
+    
+    // If we have a saved level, use it (user was at this level before navigating away)
+    if (savedCurrentLevel) {
+      const savedLevel = parseInt(savedCurrentLevel, 10);
+      // Use saved level if it's valid and not completed
+      if (savedLevel >= 1 && savedLevel <= levelData.length && !completed.includes(savedLevel)) {
+        levelToSet = savedLevel;
+      }
+    }
+    
+    if (levelToSet <= levelData.length) {
+      setCurrentLevel(levelToSet);
+      const levelPos = levelData.find(l => l.id === levelToSet);
       if (levelPos) {
         setLogoPosition({ x: levelPos.x, y: levelPos.y });
       }
@@ -375,12 +394,7 @@ const LevelMap: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Tooltip */}
-        <LevelTooltip
-          level={hoveredLevel}
-          isVisible={hoveredLevel !== null}
-          position={tooltipPosition}
-        />
+        {/* Tooltip - Removed */}
 
         {/* Control Buttons */}
         <motion.div
@@ -392,20 +406,17 @@ const LevelMap: React.FC = () => {
           {!allLevelsCompleted ? (
             <motion.button
               onClick={handleNext}
-              className="text-white font-bold py-4 px-10 rounded-full shadow-lg
-                         transform transition-all duration-200 hover:scale-105 active:scale-95 
-                         disabled:opacity-50 disabled:cursor-not-allowed border-2
-                         backdrop-blur-sm"
-              style={{
-                backgroundColor: '#00d4ff',
-                borderColor: '#00d4ff',
-                boxShadow: '0 10px 25px rgba(0, 212, 255, 0.3)',
-              }}
+              className="transform transition-all duration-200 hover:scale-105 active:scale-95 
+                         disabled:opacity-50 disabled:cursor-not-allowed bg-transparent border-0 p-0"
               disabled={currentLevel > levels.length}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              {currentLevel === levels.length && completedLevels.includes(levels.length) ? 'All Complete!' : 'Next Level'}
+              <img 
+                src="./nextbutton.png" 
+                alt="Next Level" 
+                className="w-auto h-20 object-contain drop-shadow-lg"
+              />
             </motion.button>
           ) : (
             <motion.div
