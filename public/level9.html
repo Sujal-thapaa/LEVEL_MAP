@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 9 - Cryptography</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: linear-gradient(135deg, #9796f0 0%, #fbc7d4 100%); }
+    </style>
+</head>
+<body class="min-h-screen text-white">
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Level 9</h1>
+            <p class="text-xl text-purple-100">Lock it down with cipher skills.</p>
+        </div>
+
+        <div class="max-w-4xl mx-auto bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
+            <div class="text-center">
+                <div class="text-8xl mb-6">🔐</div>
+                <h2 class="text-3xl font-bold mb-4">Crypto Challenge</h2>
+                <p class="text-lg text-purple-100 mb-8">Crack codes or implement encryption securely.</p>
+                <div class="bg-white/20 rounded-2xl p-6 mb-8">
+                    <p class="text-lg">Your cryptography content goes here!</p>
+                    <p class="text-sm text-purple-200 mt-2">Add ciphers, hashing, or protocols.</p>
+                </div>
+
+                <button onclick="completeLevel()"
+                    class="bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 
+                           text-white font-bold py-4 px-8 rounded-full shadow-lg shadow-green-500/30
+                           transform transition-all duration-200 hover:scale-105 active:scale-95 
+                           border border-green-400">
+                    Complete Level
+                </button>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="index.html" class="inline-block bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 
+                text-white font-bold py-3 px-6 rounded-full shadow-lg shadow-purple-500/30 transform transition-all duration-200 hover:scale-105 active:scale-95 border border-purple-400">← Back to Level Map</a>
+        </div>
+    </div>
+
+    <script>
+        function completeLevel() {
+            localStorage.setItem('level9Completed', 'true');
+            alert('Level 9 completed! Returning to level map...');
+            window.location.href = 'index.html';
+        }
+
+        if (localStorage.getItem('level9Completed') === 'true') {
+            const btn = document.querySelector('button');
+            btn.textContent = 'Level Completed!';
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+    </script>
+</body>
+</html>
+
+

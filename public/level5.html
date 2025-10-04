@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 5 - Strategic Thinking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-gray-800">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-gray-800">Level 5</h1>
+            <p class="text-xl text-gray-600">Strategic thinking required.</p>
+        </div>
+
+        <!-- Level Content -->
+        <div class="max-w-4xl mx-auto bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-200 shadow-xl">
+            <div class="text-center">
+                <div class="text-8xl mb-6">🧠</div>
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Strategy Challenge</h2>
+                <p class="text-lg text-gray-600 mb-8">
+                    Think strategically to overcome this challenge!
+                </p>
+                
+                <!-- Placeholder for level content -->
+                <div class="bg-gray-100 rounded-2xl p-6 mb-8">
+                    <p class="text-lg text-gray-700">Your strategy content goes here!</p>
+                    <p class="text-sm text-gray-500 mt-2">This could be a chess puzzle, resource management game, or tactical challenge.</p>
+                </div>
+
+                <!-- Complete Button -->
+                <button 
+                    onclick="completeLevel()"
+                    class="bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 
+                           text-white font-bold py-4 px-8 rounded-full shadow-lg shadow-green-500/30
+                           transform transition-all duration-200 hover:scale-105 active:scale-95 
+                           border border-green-400"
+                >
+                    Complete Level
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="text-center mt-8">
+            <a href="index.html" 
+               class="inline-block bg-gradient-to-r from-teal-600 to-teal-800 hover:from-teal-700 hover:to-teal-900 
+                      text-white font-bold py-3 px-6 rounded-full shadow-lg shadow-teal-500/30
+                      transform transition-all duration-200 hover:scale-105 active:scale-95 
+                      border border-teal-400">
+                ← Back to Level Map
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function completeLevel() {
+            localStorage.setItem('level5Completed', 'true');
+            alert('Level 5 completed! Returning to level map...');
+            window.location.href = 'index.html';
+        }
+
+        if (localStorage.getItem('level5Completed') === 'true') {
+            document.querySelector('button').textContent = 'Level Completed!';
+            document.querySelector('button').disabled = true;
+            document.querySelector('button').classList.add('opacity-50', 'cursor-not-allowed');
+        }
+    </script>
+</body>
+</html>
